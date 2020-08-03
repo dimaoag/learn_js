@@ -164,4 +164,77 @@
         // если true - элемент добавляется к результату, и перебор продолжается
         // возвращается пустой массив в случае, если ничего не найдено
     });
+
+}
+// Преобразование массива
+{
+    // map = вызывает функцию для каждого элемента массива и возвращает массив результатов выполнения этой функции
+    let lengths = ["Bilbo", "Gandalf", "Nazgul"].map(item => item.length);
+    console.log(lengths); // 5,7,6
+}
+{
+    // sort = сортирует массив на месте, меняя в нём порядок элементов.
+    let arr = [ 1, 2, 15 ];
+
+    arr.sort((a, b) => a - b);
+
+    console.log(arr);  // 1, 2, 15
+}
+{
+    // reverse = меняет порядок элементов в arr на обратный.
+    let arr = [1, 2, 3, 4, 5];
+    arr.reverse();
+
+    console.log( arr ); // 5,4,3,2,1
+}
+{
+    // split = разбивает строку на массив по заданному разделителю delim
+    let names = 'Вася, Петя, Маша';
+
+    let arr = names.split(', ');
+
+    for (let name of arr) {
+        console.log( `Сообщение получат: ${name}.` ); // Сообщение получат: Вася (и другие имена)
+    }
+}
+{
+    // join = создаёт строку из элементов arr, вставляя glue между ними.
+    let arr = ['Вася', 'Петя', 'Маша'];
+
+    let str = arr.join(';'); // объединить массив в строку через ;
+
+    console.log( str ); // Вася;Петя;Маша
+}
+// tests
+{
+    let arr = [5, 3, 8, 1];
+
+    let filtered = filterRange(arr, 1, 4);
+
+    console.log( filtered ); // [3, 1]
+
+    function filterRange(arr, a, b) {
+        return arr.filter(item => (a <= item && item <= b));
+    }
+}
+{
+    let arr = [5, 3, 8, 1];
+
+    filterRangeInPlace(arr, 1, 4);
+
+    function filterRangeInPlace(arr, a, b) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] < a || arr[i] > b) {
+                arr.splice(i, 1);
+            }
+        }
+    }
+
+    console.log( arr ); // [3, 1]
+}
+{
+    let arr = [5, 2, 1, -10, 8];
+
+
+    console.log( arr ); // 8, 5, 2, 1, -10
 }
