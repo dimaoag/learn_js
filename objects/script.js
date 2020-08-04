@@ -369,4 +369,45 @@
         console.log(value);
     });
 }
+{
+    /*
+    WeakMap – это Map-подобная коллекция, позволяющая использовать в качестве ключей только объекты,
+    и автоматически удаляющая их вместе с соответствующими значениями,
+    как только они становятся недостижимыми иными путями.
+
+    WeakSet – это Set-подобная коллекция, которая хранит только объекты и удаляет их,
+    как только они становятся недостижимыми иными путями.
+     */
+}
+// Object.keys, values, entries
+{
+    /*
+    Object.keys(obj) – возвращает массив ключей.
+    Object.values(obj) – возвращает массив значений.
+    Object.entries(obj) – возвращает массив пар [ключ, значение].
+     */
+
+    let user = {
+        name: "John",
+        age: 30
+    };
+
+    Object.keys(user) //= ["name", "age"]
+    Object.values(user) //= ["John", 30]
+    Object.entries(user) //= [ ["name","John"], ["age",30] ]
+
+    // Например, у нас есть объект с ценами, и мы хотели бы их удвоить:
+    let prices = {
+        banana: 1,
+        orange: 2,
+        meat: 4,
+    };
+
+    let doublePrices = Object.fromEntries(
+        // преобразовать в массив, затем map, затем fromEntries обратно объект
+        Object.entries(prices).map(([key, value]) => [key, value * 2])
+    );
+
+    console.log(doublePrices.meat); // 8
+}
 
