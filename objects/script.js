@@ -410,4 +410,173 @@
 
     console.log(doublePrices.meat); // 8
 }
+// Деструктурирующее присваивание
+{
+    // у нас есть массив с именем и фамилией
+    let arr = ["Ilya", "Kantor"]
 
+    // деструктурирующее присваивание
+    // записывает firstName=arr[0], surname=arr[1]
+    let [firstName, surname] = arr;
+
+    console.log(firstName); // Ilya
+    console.log(surname);  // Kantor
+
+    let [firstName1, surname1] = "Ilya Kantor".split(' ');
+    console.log(firstName1); // Ilya
+    console.log(surname1);  // Kantor
+}
+{
+    // второй элемент не нужен
+    let [firstName, , title] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+
+    console.log( title ); // Consul
+}
+{
+    let [a, b, c] = "abc";
+    let [one, two, three] = new Set([1, 2, 3]);
+}
+{
+    let user = {};
+    [user.name, user.surname] = "Ilya Kantor".split(' ');
+
+    console.log(user.name); // Ilya
+}
+{
+    let user = {
+        name: "John",
+        age: 30
+    };
+
+    // цикл по ключам и значениям
+    for (let [key, value] of Object.entries(user)) {
+        console.log(`${key}:${value}`); // name:John, затем age:30
+    }
+}
+{
+    let user = new Map();
+    user.set("name", "John");
+    user.set("age", "30");
+
+    for (let [key, value] of user) {
+        console.log(`${key}:${value}`); // name:John, затем age:30
+    }
+}
+{
+    let [name1, name2, ...rest] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+
+    console.log(name1); // Julius
+    console.log(name2); // Caesar
+
+    // Обратите внимание, что `rest` является массивом.
+    console.log(rest[0]); // Consul
+    console.log(rest[1]); // of the Roman Republic
+    console.log(rest.length); // 2
+}
+{
+    // значения по умолчанию
+    let [name = "Guest", surname = "Anonymous"] = ["Julius"];
+
+    console.log(name);    // Julius (из массива)
+    console.log(surname); // Anonymous (значение по умолчанию)
+}
+{
+    // Деструктуризация объекта
+    let options = {
+        title: "Menu",
+        width: 100,
+        height: 200
+    };
+
+    let {title, width, height} = options;
+
+    console.log(title);  // Menu
+    console.log(width);  // 100
+    console.log(height); // 200
+}
+{
+    // Если мы хотим присвоить свойство объекта переменной с другим названием, например,
+    // свойство options.width присвоить переменной w, то мы можем использовать двоеточие:
+    let options = {
+        title: "Menu",
+        width: 100,
+        height: 200
+    };
+
+    // { sourceProperty: targetVariable }
+    let {width: w, height: h, title} = options;
+
+    // width -> w
+    // height -> h
+    // title -> title
+
+    console.log(title);  // Menu
+    console.log(w);      // 100
+    console.log(h);      // 200
+}
+{
+    // Мы также можем совмещать : и =:
+    let options = {
+        title: "Menu"
+    };
+
+    let {width: w = 100, height: h = 200, title} = options;
+
+    console.log(title);  // Menu
+    console.log(w);      // 100
+    console.log(h);      // 200
+}
+{
+    let options = {
+        title: "Menu",
+        width: 100,
+        height: 200
+    };
+
+    // взять только title, игнорировать остальное
+    let { title } = options;
+
+    console.log(title); // Menu
+}
+{
+    let options = {
+        title: "Menu",
+        height: 200,
+        width: 100
+    };
+
+    // title = свойство с именем title
+    // rest = объект с остальными свойствами
+    let {title, ...rest} = options;
+
+    // сейчас title="Menu", rest={height: 200, width: 100}
+    console.log(rest.height);  // 200
+    console.log(rest.width);   // 100
+}
+{
+    // Вложенная деструктуризация
+    let options = {
+        size: {
+            width: 100,
+            height: 200
+        },
+        items: ["Cake", "Donut"],
+        extra: true
+    };
+
+    // деструктуризация разбита на несколько строк для ясности
+    let {
+        size: { // положим size сюда
+            width,
+            height
+        },
+        items: [item1, item2], // добавим элементы к items
+        title = "Menu" // отсутствует в объекте (используется значение по умолчанию)
+    } = options;
+
+    console.log(title);  // Menu
+    console.log(width);  // 100
+    console.log(height); // 200
+    console.log(item1);  // Cake
+    console.log(item2);  // Donut
+}
