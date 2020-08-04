@@ -271,6 +271,102 @@
 }
 // Map
 {
-    // Map
+    // Map - это коллекция ключ/значение, как и Object. Но основное отличие в том, что Map позволяет использовать ключи любого типа
+    /*
+    new Map() – создаёт коллекцию.
+    map.set(key, value) – записывает по ключу key значение value.
+    map.get(key) – возвращает значение по ключу или undefined, если ключ key отсутствует.
+    map.has(key) – возвращает true, если ключ key присутствует в коллекции, иначе false.
+    map.delete(key) – удаляет элемент по ключу key.
+    map.clear() – очищает коллекцию от всех элементов.
+    map.size – возвращает текущее количество элементов.
+    */
+
+    let map = new Map();
+    map.set("1", "str1")
+        .set(1, "num1")
+        .set(true, "bool1");
+
+    /*
+    map.keys() – возвращает итерируемый объект по ключам,
+    map.values() – возвращает итерируемый объект по значениям,
+    map.entries() – возвращает итерируемый объект по парам вида [ключ, значение], этот вариант используется по умолчанию в for..of.
+    */
+
+    let recipeMap = new Map([
+        ["огурец", 500],
+        ["помидор", 350],
+        ["лук",    50]
+    ]);
+
+    // перебор по ключам (овощи)
+    for (let vegetable of recipeMap.keys()) {
+        console.log(vegetable); // огурец, помидор, лук
+    }
+
+    // перебор по значениям (числа)
+    for (let amount of recipeMap.values()) {
+        console.log(amount); // 500, 350, 50
+    }
+
+    // перебор по элементам в формате [ключ, значение]
+    for (let entry of recipeMap) { // то же самое, что и recipeMap.entries()
+        console.log(entry); // огурец,500 (и так далее)
+    }
+
+    // выполняем функцию для каждой пары (ключ, значение)
+    recipeMap.forEach((value, key, map) => {
+        console.log(`${key}: ${value}`); // огурец: 500 и так далее
+    });
+
+    // массив пар [ключ, значение]
+    let map1 = new Map([
+        ['1',  'str1'],
+        [1,    'num1'],
+        [true, 'bool1']
+    ]);
+
+    console.log( map1.get('1') ); // str1
+}
+// Set
+{
+    // Set – это особый вид коллекции: «множество» значений (без ключей), где каждое значение может появляться только один раз.
+    /*
+    new Set(iterable) – создаёт Set, и если в качестве аргумента был предоставлен итерируемый объект (обычно это массив), то копирует его значения в новый Set.
+    set.add(value) – добавляет значение (если оно уже есть, то ничего не делает), возвращает тот же объект set.
+    set.delete(value) – удаляет значение, возвращает true если value было в множестве на момент вызова, иначе false.
+    set.has(value) – возвращает true, если значение присутствует в множестве, иначе false.
+    set.clear() – удаляет все имеющиеся значения.
+    set.size – возвращает количество элементов в множестве.
+    */
+
+    let set = new Set();
+
+    let john = { name: "John" };
+    let pete = { name: "Pete" };
+    let mary = { name: "Mary" };
+
+    // считаем гостей, некоторые приходят несколько раз
+    set.add(john);
+    set.add(pete);
+    set.add(mary);
+    set.add(john);
+    set.add(mary);
+
+    // set хранит только 3 уникальных значения
+    console.log(set.size); // 3
+
+    for (let user of set) {
+        console.log(user.name); // John (потом Pete и Mary)
+    }
+
+    let set1 = new Set(["апельсин", "яблоко", "банан"]);
+
+    for (let value of set1) console.log(value);
+
+    // то же самое с forEach:
+    set1.forEach((value, valueAgain, set) => {
+        console.log(value);
+    });
 }
 
