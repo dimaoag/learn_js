@@ -212,3 +212,79 @@
     console.log( sum(1)(2) ); // 3
     console.log( sum(5)(-1) ); // 4
 }
+// function.name - name of fuction
+{
+    // В JavaScript функции – это объекты.
+
+    function sayHi() {
+        console.log("Hi");
+    }
+
+    console.log(sayHi.name); // sayHi
+}
+{
+    let sayHi = function() {
+        console.log("Hi");
+    };
+
+    console.log(sayHi.name); // sayHi (есть имя!)
+}
+{
+    function f(sayHi = function() {}) {
+        console.log(sayHi.name); // sayHi (работает!)
+    }
+
+    f();
+}
+{
+    let user = {
+
+        sayHi() {
+            // ...
+        },
+
+        sayBye: function() {
+            // ...
+        }
+
+    }
+
+    console.log(user.sayHi.name); // sayHi
+    console.log(user.sayBye.name); // sayBye
+}
+// function.length - count of arguments
+{
+    function f1(a) {}
+    function f2(a, b) {}
+    function many(a, b, ...more) {} // здесь как бы «не считается»
+
+    console.log(f1.length); // 1
+    console.log(f2.length); // 2
+    console.log(many.length); // 2
+}
+// new Function([arg1, arg2, ...argN], functionBody);
+{
+    // функция создаётся полностью «на лету» из строки, переданной во время выполнения.
+    let sum = new Function('a', 'b', 'return a + b');
+    console.log( sum(1, 2) ); // 3
+
+    let sayHi = new Function('console.log("Hello")');
+    sayHi(); // Hello
+}
+// new Function and closure
+{
+    /*
+    Но когда функция создаётся с использованием new Function, в её [[Environment]]
+    записывается ссылка не на внешнее лексическое окружение, в котором она была создана, а на глобальное.
+    Поэтому такая функция имеет доступ только к глобальным переменным.
+     */
+    function getFunc() {
+        let value = "test";
+
+        let func = new Function('console.log(value)');
+
+        return func;
+    }
+
+    getFunc()(); // ошибка: value не определено
+}
