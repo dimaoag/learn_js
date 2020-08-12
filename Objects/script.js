@@ -580,3 +580,37 @@
     console.log(item1);  // Cake
     console.log(item2);  // Donut
 }
+
+// Global Object
+{
+    /*
+        window -> Browser
+        global -> Node.js
+        globalThis -> anywhere
+    */
+
+    console.log(globalThis);
+
+    // сделать информацию о текущем пользователе глобальной, для предоставления доступа всем скриптам
+    window.currentUser = {
+        name: "John"
+    };
+
+    // где угодно в коде
+    console.log(currentUser.name); // John
+
+    // или, если у нас есть локальная переменная с именем "currentUser",
+    // получим её из window явно (безопасно!)
+    console.log(window.currentUser.name); // John
+}
+{
+    // For globalThis
+
+    globalThis.currentUser = {
+        name: "John"
+    };
+
+    // где угодно в коде
+    console.log(currentUser.name); // John
+    console.log(globalThis.currentUser.name); // John
+}
