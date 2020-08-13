@@ -288,3 +288,28 @@
 
     getFunc()(); // ошибка: value не определено
 }
+
+// У стрелочных функций нет «this»
+{
+    /*
+    Если происходит обращение к this, его значение берётся снаружи.
+     */
+
+    let group = {
+        title: "Our Group",
+        students: ["John", "Pete", "Alice"],
+
+        showList() {
+            this.students.forEach(
+                student => console.log(this.title + ': ' + student)
+            );
+        }
+    };
+
+    group.showList();
+}
+
+// Стрелочные функции не имеют «arguments»
+{
+
+}
