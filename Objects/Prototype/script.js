@@ -215,3 +215,92 @@
     // По умолчанию все функции имеют F.prototype = { constructor: F },
     // поэтому мы можем получить конструктор объекта через свойство "constructor".
 }
+// встроеные прототипи
+{
+    /*
+        obj = {} – это то же самое, что и obj = new Object(),
+        где Object – встроенная функция-конструктор для объектов с собственным свойством prototype,
+        которое ссылается на огромный объект с методом toString и другими.
+     */
+
+    let obj = {};
+
+    console.log(obj.__proto__ === Object.prototype); // true
+    // obj.toString === obj.__proto__.toString == Object.prototype.toString
+
+    /*
+         Иерархия встроеных прототипов:
+
+                                            null
+                                             |
+                                        Object.prototype
+                          -----------  (toString: function ...)--------------------------------------------------
+                         |                  |                              \                       \      \      \
+                        |                   |                               \                       \      \      \
+
+             Array.prototype            Function.prototype             Number.prototype             Date  String Boolean
+            (slice: function ...)       (call: function ...)          (toFixed: function ...)
+                    |                           |                              |
+                [1, 2, 3]               function f(args) { ... }              56
+
+     */
+
+    /*
+        Некоторые методы в прототипах могут пересекаться,
+        например, у Array.prototype есть свой метод toString, который выводит элементы массива через запятую:
+     */
+
+    let arr = [1, 2, 3]
+    console.log(arr); // 1,2,3 <-- результат Array.prototype.toString
+
+    /*
+        Самое сложное происходит со строками, числами и булевыми значениями.
+        Как мы помним, они не объекты. Но если мы попытаемся получить доступ к их свойствам,
+        то тогда будет создан временный объект-обёртка с использованием встроенных конструкторов String, Number и Boolean,
+        который предоставит методы и после этого исчезнет.
+
+        Значения null и undefined не имеют объектов-обёрток
+
+        Встроенные прототипы можно изменять.
+        Например, если добавить метод к String.prototype, метод становится доступен для всех строк:
+     */
+
+    String.prototype.show = function() {
+        console.log(this);
+    };
+
+    "BOOM!".show(); // BOOM!
+}
+{
+    /*
+        Современные же методы это:
+            Object.create(proto, [descriptors]) – создаёт пустой объект со свойством [[Prototype]],
+                    указанным как proto, и необязательными дескрипторами свойств descriptors.
+            Object.getPrototypeOf(obj) – возвращает свойство [[Prototype]] объекта obj.
+            Object.setPrototypeOf(obj, proto) – устанавливает свойство [[Prototype]] объекта obj как proto.
+        Эти методы нужно использовать вместо __proto__.
+
+     */
+
+    let animal = {
+        eats: true
+    };
+
+    // создаём новый объект с прототипом animal
+    let rabbit = Object.create(animal);
+
+    console.log(rabbit.eats); // true
+
+    console.log(Object.getPrototypeOf(rabbit) === animal); // получаем прототип объекта rabbit
+
+    Object.setPrototypeOf(rabbit, {}); // заменяем прототип объекта rabbit на {}
+}
+// Object.create
+{
+
+    // Такой вызов создаёт точную копию объекта obj, включая все свойства: перечисляемые и неперечисляемые,
+    // геттеры/сеттеры для свойств – и всё это с правильным свойством [[Prototype]].
+    let obj = {name: 'John'};
+    let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));
+    console.log(clone)
+}
