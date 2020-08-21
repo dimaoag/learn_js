@@ -281,5 +281,130 @@
     Для class B extends A прототип класса B указывает на A: B.[[Prototype]] = A.
     Таким образом, если поле не найдено в B, поиск продолжается в A.
      */
+}
 
+// Защищённые свойства обычно начинаются с префикса _.
+{
+    /*
+        Защищённые поля наследуются
+     */
+    class CoffeeMachine {
+        _waterAmount = 0;
+
+        set waterAmount(value) {
+            if (value < 0) throw new Error("Отрицательное количество воды");
+            this._waterAmount = value;
+        }
+
+        get waterAmount() {
+            return this._waterAmount;
+        }
+
+        constructor(power) {
+            this._power = power;
+        }
+
+    }
+
+    // создаём новую кофеварку
+    let coffeeMachine = new CoffeeMachine(100);
+
+    // устанавливаем количество воды
+    //coffeeMachine.waterAmount = -10; // Error: Отрицательное количество воды
+}
+{
+    class CoffeeMachine {
+        // ...
+
+        constructor(power) {
+            this._power = power;
+        }
+
+        get power() {
+            return this._power;
+        }
+
+    }
+
+    // создаём кофеварку
+    let coffeeMachine = new CoffeeMachine(100);
+
+    console.log(`Мощность: ${coffeeMachine.power}W`); // Мощность: 100W
+
+    coffeeMachine.power = 25; // Error (no setter)
+}
+{
+    class CoffeeMachine {
+        _waterAmount = 0;
+
+        setWaterAmount(value) {
+            if (value < 0) throw new Error("Отрицательное количество воды");
+            this._waterAmount = value;
+        }
+
+        getWaterAmount() {
+            return this._waterAmount;
+        }
+    }
+
+    new CoffeeMachine().setWaterAmount(100)
+}
+
+// Приватное свойство «#waterLimit»
+{
+
+    /*
+        class CoffeeMachine {
+            #waterLimit = 200;
+
+            #checkWater(value) {
+                if (value < 0) throw new Error("Отрицательный уровень воды");
+                if (value > this.#waterLimit) throw new Error("Слишком много воды");
+            }
+        }
+
+        let coffeeMachine = new CoffeeMachine();
+
+        // снаружи  нет доступа к приватным методам класса
+        coffeeMachine.#checkWater(); // Error
+        coffeeMachine.#waterLimit = 1000; // Error
+    */
+}
+
+// От встроенных классов, таких как Array, Map и других, тоже можно наследовать.
+{
+    // добавим один метод (можно более одного)
+    class PowerArray extends Array {
+        isEmpty() {
+            return this.length === 0;
+        }
+    }
+
+    let arr = new PowerArray(1, 2, 5, 10, 50);
+    console.log(arr.isEmpty()); // false
+
+    let filteredArr = arr.filter(item => item >= 10);
+    console.log(filteredArr); // 10, 50
+    console.log(filteredArr.isEmpty()); // false
+    console.log(arr.constructor === PowerArray); // true
+}
+
+// obj instanceof Class
+{
+    class Rabbit {}
+    let rabbit = new Rabbit();
+
+    // это объект класса Rabbit?
+    console.log( rabbit instanceof Rabbit ); // true
+}
+{
+    // вместо класса
+    function Rabbit() {}
+
+    console.log( new Rabbit() instanceof Rabbit ); // true
+}
+{
+    let arr = [1, 2, 3];
+    console.log( arr instanceof Array ); // true
+    console.log( arr instanceof Object ); // true
 }
