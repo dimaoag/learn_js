@@ -195,3 +195,92 @@
      */
 }
 
+// обработка ошибок
+{
+  fetch('https://no-such-server.blabla') // ошибка
+    .then(response => response.json())
+    .catch(err => console.log(err)) // TypeError: failed to fetch (текст может отличаться)
+}
+{
+  // Самый лёгкий путь перехватить все ошибки – это добавить .catch в конец цепочки:
+  fetch('/article/promise-chaining/user.json')
+    .then(response => response.json())
+    .then(user => fetch(`https://api.github.com/users/${user.name}`))
+    .then(response => response.json())
+    .then(githubUser => new Promise((resolve, reject) => {
+      let img = document.createElement('img');
+      img.src = githubUser.avatar_url;
+      img.className = "promise-avatar-example";
+      document.body.append(img);
+
+      setTimeout(() => {
+        img.remove();
+        resolve(githubUser);
+      }, 3000);
+    }))
+    .catch(error => console.log(error.message));
+}
+
+// Неявный try…catch
+{
+  /*
+    "Невидимый try..catch" вокруг промиса автоматически перехватывает ошибку и превращает её в отклонённый промис.
+
+
+   */
+  new Promise((resolve, reject) => {
+    throw new Error("Ошибка1!");
+  }).catch(console.log); // Error: Ошибка!
+
+  // …Работает так же, как и этот:
+  new Promise((resolve, reject) => {
+    reject(new Error("Ошибка2!"));
+  }).catch(console.log); // Error: Ошибка!
+
+  new Promise((resolve, reject) => {
+    resolve("ок");
+  }).then((result) => {
+    throw new Error("Ошибка3!"); // генерируем ошибку
+  }).catch(console.log); // Error: Ошибка!
+}
+
+// Пробрасывание ошибок
+{
+  // the execution: catch -> then
+  new Promise((resolve, reject) => {
+
+    throw new Error("Ошибка4!");
+
+  }).catch(function(error) {
+
+    console.log("Ошибка обработана, продолжить работу");
+
+  }).then(() => console.log("Управление перейдёт в следующий then"));
+}
+
+// the execution: catch -> catch -> then
+{
+  new Promise((resolve, reject) => {
+
+    throw new Error("Ошибка5!");
+
+  }).catch(function(error) { // (*)
+
+    if (error instanceof URIError) {
+      // обрабатываем ошибку
+    } else {
+      console.log("Не могу обработать ошибку");
+
+      throw error; // пробрасывает эту или другую ошибку в следующий catch
+    }
+
+  }).then(function() {
+    /* не выполнится */
+  }).catch(error => { // (**)
+
+    console.log(`Неизвестная ошибка: ${error}`);
+    // ничего не возвращаем => выполнение продолжается в нормальном режиме
+  });
+}
+
+
