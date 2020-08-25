@@ -132,6 +132,8 @@
         error => console.log(`Ошибка: ${error.message}`)
     );
 
+
+
     promise.then(script => console.log('Ещё один обработчик...'));
 }
 {
@@ -142,5 +144,54 @@
     }
 
     delay(3000).then(() => console.log('выполнилось через 3 секунды'));
+}
+
+// Цепочка промисов
+{
+    /*
+        loadScript("/article/promise-chaining/one.js")
+            .then(script => loadScript("/article/promise-chaining/two.js"))
+            .then(script => loadScript("/article/promise-chaining/three.js"))
+            .then(script => {
+                // скрипты загружены, мы можем использовать объявленные в них функции
+                one();
+                two();
+                three();
+        });
+
+    ============================================================
+
+      function loadJson(url) {
+          return fetch(url)
+              .then(response => response.json());
+      }
+
+      function loadGithubUser(name) {
+          return fetch(`https://api.github.com/users/${name}`)
+              .then(response => response.json());
+      }
+
+      function showAvatar(githubUser) {
+          return new Promise(function(resolve, reject) {
+              let img = document.createElement('img');
+              img.src = githubUser.avatar_url;
+              img.className = "promise-avatar-example";
+              document.body.append(img);
+
+              setTimeout(() => {
+                  img.remove();
+                  resolve(githubUser);
+              }, 3000);
+          });
+      }
+
+      // Используем их:
+      loadJson('/article/promise-chaining/user.json')
+          .then(user => loadGithubUser(user.name))
+          .then(showAvatar)
+          .then(githubUser => alert(`Показ аватара ${githubUser.name} завершён`));
+      // ...
+
+     */
 }
 
