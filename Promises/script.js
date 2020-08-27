@@ -365,8 +365,123 @@
       {status: 'rejected', reason: ...объект ошибки...}
     ]
    */
-
-
 }
 
+// Async/await
+{
+  /*
+    async - функция всегда возвращает промис
+   */
+  async function f() {
+    return 111;
+  }
+
+  f().then(console.log); // 111
+
+  // результат будет одинаковым
+
+  async function f2() {
+    return Promise.resolve(111);
+  }
+
+  f2().then(console.log); // 111
+}
+// await - которое можно использовать только внутри async-функций
+{
+  /*
+    // работает только внутри async–функций
+    let value = await promise;
+
+    заставит интерпретатор JavaScript ждать до тех пор, пока промис справа от await не выполнится.
+
+    await нельзя использовать на верхнем уровне вложенности
+
+
+   */
+
+  async function f() {
+
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("123готово!"), 1000)
+    });
+
+    let result = await promise; // будет ждать, пока промис не выполнится (*)
+
+    console.log(result); // "готово!"
+  }
+
+  f();
+}
+{
+    async function showAvatar() {
+
+      // запрашиваем JSON с данными пользователя
+      let response = await fetch('/article/promise-chaining/user.json');
+      let user = await response.json();
+
+      // запрашиваем информацию об этом пользователе из github
+      let githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
+      let githubUser = await githubResponse.json();
+
+      // отображаем аватар пользователя
+      let img = document.createElement('img');
+      img.src = githubUser.avatar_url;
+      img.className = "promise-avatar-example";
+      document.body.append(img);
+
+      // ждём 3 секунды и затем скрываем аватар
+      await new Promise((resolve, reject) => setTimeout(resolve, 3000));
+
+      img.remove();
+
+      return githubUser;
+    }
+
+    showAvatar();
+}
+
+// Асинхронные методы классов
+{
+  class Waiter {
+    async wait() {
+      return await Promise.resolve(1);
+    }
+  }
+
+  new Waiter()
+    .wait()
+    .then(console.log); // 1
+}
+
+// Обработка ошибок
+{
+  /*
+   Когда промис завершается успешно, await promise возвращает результат.
+   Когда завершается с ошибкой – будет выброшено исключение. Как если бы на этом месте находилось выражение throw.
+   */
+
+  async function f() {
+    await Promise.reject(new Error("Упс!"));
+  }
+
+  // Делает тоже самое, что и такой:
+
+  async function f2() {
+    throw new Error("Упс!");
+  }
+}
+{
+  async function f() {
+
+    try {
+      let response = await fetch('/no-user-here');
+      let user = await response.json();
+    } catch(err) {
+      // перехватит любую ошибку в блоке try: и в fetch, и в response.json
+      alert(err);
+    }
+  }
+
+  f();
+}
 
