@@ -110,3 +110,77 @@ document.oncontextmenu = function(event) {
   event.preventDefault();
   alert("Контекстное меню документа");
 };
+
+/*
+  Custom events
+
+  Событие встроенного класса Event можно создать так: let event = new Event(type[, options]);
+    type – тип события, строка, например "click" или же любой придуманный нами – "my-event".
+    options – объект с тремя необязательными свойствами:
+      bubbles: true/false – если true, тогда событие всплывает.
+      cancelable: true/false – если true, тогда можно отменить действие по умолчанию. Позже мы разберём, что это значит для пользовательских событий.
+      composed: true/false – если true, тогда событие будет всплывать наружу за пределы Shadow DOM. Позже мы разберём это в разделе Веб-компоненты.
+
+  Можно легко отличить «настоящее» событие от сгенерированного кодом.
+  Свойство event.isTrusted принимает значение true для событий, порождаемых реальными действиями пользователя, и false для генерируемых кодом.
+ */
+
+let event = new Event("click");
+elem3.dispatchEvent(event);
+
+// ловим на document...
+document.addEventListener("hello", function(event) { // (1)
+  console.log("Привет от " + event.target.tagName); // Привет от H1
+});
+
+// ...запуск события на элементе!
+event = new Event("hello", {bubbles: true}); // (2)
+elem4.dispatchEvent(event);
+
+/*
+  Вот небольшой список конструкторов для различных событий пользовательского интерфейса,
+  которые можно найти в спецификации UI Event:
+    UIEvent
+    FocusEvent
+    MouseEvent
+    WheelEvent
+    KeyboardEvent
+    …
+  Стоит использовать их вместо new Event, если мы хотим создавать такие события. К примеру, new MouseEvent("click").
+
+  Для генерации событий совершенно новых типов, таких как "hello", следует использовать конструктор new CustomEvent.
+  У второго аргумента-объекта есть дополнительное свойство detail, в котором можно указывать информацию для передачи в событие.
+ */
+
+// дополнительная информация приходит в обработчик вместе с событием
+elem5.addEventListener("hello", function(event) {
+  console.log(event.detail.name);
+});
+
+elem5.dispatchEvent(new CustomEvent("hello", {
+  detail: { name: "Вася" }
+}));
+
+// hide() будет вызван автоматически через 2 секунды
+function hide() {
+  let event = new CustomEvent("hide", {
+    cancelable: true // без этого флага preventDefault не сработает
+  });
+  if (!rabbit.dispatchEvent(event)) {
+    alert('Действие отменено обработчиком');
+  } else {
+    rabbit.hidden = true;
+  }
+}
+
+rabbit.addEventListener('hide', function(event) {
+  if (confirm("Вызвать preventDefault?")) {
+    event.preventDefault();
+  }
+});
+
+/*
+  Вложенные события обрабатываются синхронно
+
+ */
+
