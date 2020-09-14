@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+      body * {
+        margin: 10px;
+        border: 1px solid blue;
+      }
+    </style>
+</head>
+<body class="wrapper">
+
+  <input id="elem" type="button" value="Нажми меня!">
+  <input id="button" type="button" value="button">
+  <input id="button2" type="button" value="Нажми меня"/>
+  <button id="elem3">Нажми меня 3</button>
+
+  <form onclick="console.log('form')">FORM
+    <div onclick="console.log('div')">DIV
+      <p onclick="console.log('p')">P</p>
+    </div>
+  </form>
+
+  <div class="from_wrapper">
+    <form onclick="console.log('form')">FORM
+      <div onclick="console.log('div')">DIV
+        <p onclick="console.log('p')">P</p>
+      </div>
+    </form>
+  </div>
+
+
+
+  <script src="script.js"></script>
+</body>
+</html>
