@@ -3,8 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+
+      #container {
+        border: 1px solid brown;
+        padding: 10px;
+        width: 330px;
+        margin-bottom: 5px;
+        box-sizing: border-box;
+      }
+
+      #log {
+        height: 120px;
+        width: 350px;
+        display: block;
+        box-sizing: border-box;
+      }
+
+      [class^="smiley-"] {
+        display: inline-block;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        margin-right: 20px;
+      }
+
+      .smiley-green {
+        background: #a9db7a;
+        border: 5px solid #92c563;
+        position: relative;
+      }
+
+      .smiley-green .left-eye {
+        width: 18%;
+        height: 18%;
+        background: #84b458;
+        position: relative;
+        top: 29%;
+        left: 22%;
+        border-radius: 50%;
+        float: left;
+      }
+
+      .smiley-green .right-eye {
+        width: 18%;
+        height: 18%;
+        border-radius: 50%;
+        position: relative;
+        background: #84b458;
+        top: 29%;
+        right: 22%;
+        float: right;
+      }
+
+      .smiley-green .smile {
+        position: absolute;
+        top: 67%;
+        left: 16.5%;
+        width: 70%;
+        height: 20%;
+        overflow: hidden;
+      }
+
+      .smiley-green .smile:after,
+      .smiley-green .smile:before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: 0%;
+        border-radius: 50%;
+        background: #84b458;
+        height: 100%;
+        width: 97%;
+      }
+
+      .smiley-green .smile:after {
+        background: #84b458;
+        height: 80%;
+        top: -40%;
+        left: 0%;
+      }
+
+      .smiley-yellow {
+        background: #eed16a;
+        border: 5px solid #dbae51;
+        position: relative;
+      }
+
+      .smiley-yellow .left-eye {
+        width: 18%;
+        height: 18%;
+        background: #dba652;
+        position: relative;
+        top: 29%;
+        left: 22%;
+        border-radius: 50%;
+        float: left;
+      }
+
+      .smiley-yellow .right-eye {
+        width: 18%;
+        height: 18%;
+        border-radius: 50%;
+        position: relative;
+        background: #dba652;
+        top: 29%;
+        right: 22%;
+        float: right;
+      }
+
+      .smiley-yellow .smile {
+        position: absolute;
+        top: 67%;
+        left: 19%;
+        width: 65%;
+        height: 14%;
+        background: #dba652;
+        overflow: hidden;
+        border-radius: 8px;
+      }
+
+      .smiley-red {
+        background: #ee9295;
+        border: 5px solid #e27378;
+        position: relative;
+      }
+
+      .smiley-red .left-eye {
+        width: 18%;
+        height: 18%;
+        background: #d96065;
+        position: relative;
+        top: 29%;
+        left: 22%;
+        border-radius: 50%;
+        float: left;
+      }
+
+      .smiley-red .right-eye {
+        width: 18%;
+        height: 18%;
+        border-radius: 50%;
+        position: relative;
+        background: #d96065;
+        top: 29%;
+        right: 22%;
+        float: right;
+      }
+
+      .smiley-red .smile {
+        position: absolute;
+        top: 57%;
+        left: 16.5%;
+        width: 70%;
+        height: 20%;
+        overflow: hidden;
+      }
+
+      .smiley-red .smile:after,
+      .smiley-red .smile:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0%;
+        border-radius: 50%;
+        background: #d96065;
+        height: 100%;
+        width: 97%;
+      }
+
+      .smiley-red .smile:after {
+        background: #d96065;
+        height: 80%;
+        top: 60%;
+        left: 0%;
+      }
+
+      #parent, #parent2 {
+        background: #99C0C3;
+        width: 160px;
+        height: 120px;
+        position: relative;
+      }
+
+      #child, #child2 {
+        background: #FFDE99;
+        width: 50%;
+        height: 50%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      textarea {
+        height: 140px;
+        width: 300px;
+        display: block;
+      }
+
+      #text3 {
+        display: block;
+        height: 100px;
+        width: 456px;
+      }
+
+      #table th {
+        text-align: center;
+        font-weight: bold;
+      }
+
+      #table td {
+        width: 150px;
+        white-space: nowrap;
+        text-align: center;
+        vertical-align: bottom;
+        padding-top: 5px;
+        padding-bottom: 12px;
+        cursor: pointer;
+      }
+
+      #table .nw {
+        background: #999;
+      }
+
+      #table .n {
+        background: #03f;
+        color: #fff;
+      }
+
+      #table .ne {
+        background: #ff6;
+      }
+
+      #table .w {
+        background: #ff0;
+      }
+
+      #table .c {
+        background: #60c;
+        color: #fff;
+      }
+
+      #table .e {
+        background: #09f;
+        color: #fff;
+      }
+
+      #table .sw {
+        background: #963;
+        color: #fff;
+      }
+
+      #table .s {
+        background: #f60;
+        color: #fff;
+      }
+
+      #table .se {
+        background: #0c3;
+        color: #fff;
+      }
+
+      #table .highlight {
+        background: red;
+      }
+
+
+    </style>
 </head>
 <body class="wrapper">
+
+  <button id="button">Нажми Alt+Shift+Click на мне!</button>
+
+  <br>
+
+  <label>
+    <input type="text" onmousemove="this.value=event.clientX+':'+event.clientY" value="Наведи на меня мышь">
+  </label>
+
+  <br>
+
+  <b ondblclick="alert('Клик!')" onmousedown="return false">
+    Сделайте двойной клик на мне
+  </b>
+
+  <div oncopy="alert('Копирование запрещено!');return false">
+    Уважаемый пользователь,
+    Копирование информации запрещено для вас.
+    Если вы знаете JS или HTML, вы можете найти всю нужную вам информацию в исходном коде страницы.
+  </div>
+
+
+  <!-- ------------------------------------------- -->
+
+  <div id="container">
+    <div class="smiley-green">
+      <div class="left-eye"></div>
+      <div class="right-eye"></div>
+      <div class="smile"></div>
+    </div>
+
+    <div class="smiley-yellow">
+      <div class="left-eye"></div>
+      <div class="right-eye"></div>
+      <div class="smile"></div>
+    </div>
+
+    <div class="smiley-red">
+      <div class="left-eye"></div>
+      <div class="right-eye"></div>
+      <div class="smile"></div>
+    </div>
+  </div>
+
+  <textarea id="log">События будут показываться здесь!</textarea>
+
+
+  <!-- ------------------------------------------- -->
+
+  <div id="parent" onmouseover="mouselog(event)" onmouseout="mouselog(event)">parent
+    <div id="child">child</div>
+  </div>
+
+  <textarea id="text"></textarea>
+  <input type="button" onclick="text.value=''" value="Очистить">
+
+  <!-- ------------------------------------------- -->
+
+  <div id="parent2" onmouseenter="mouselog2(event)" onmouseleave="mouselog2(event)">parent
+    <div id="child2">child</div>
+  </div>
+
+  <textarea id="text2"></textarea>
+  <input type="button" onclick="text2.value=''" value="Очистить">
+
+  <!-- ------------------------------------------- -->
+
+  <table id="table">
+    <tr>
+      <th colspan="3">Квадрат <em>Bagua</em>: Направление, Элемент, Цвет, Значение</th>
+    </tr>
+    <tr>
+      <td class="nw"><strong>Северо-Запад</strong>
+        <br>Металл
+        <br>Серебро
+        <br>Старейшины
+      </td>
+      <td class="n"><strong>Север</strong>
+        <br>Вода
+        <br>Синий
+        <br>Перемены
+      </td>
+      <td class="ne"><strong>Северо-Восток</strong>
+        <br>Земля
+        <br>Жёлтый
+        <br>Направление
+      </td>
+    </tr>
+    <tr>
+      <td class="w"><strong>Запад</strong>
+        <br>Металл
+        <br>Золото
+        <br>Молодость
+      </td>
+      <td class="c"><strong>Центр</strong>
+        <br>Всё
+        <br>Пурпурный
+        <br>Гармония
+      </td>
+      <td class="e"><strong>Восток</strong>
+        <br>Дерево
+        <br>Синий
+        <br>Будущее
+      </td>
+    </tr>
+    <tr>
+      <td class="sw"><strong>Юго-Запад</strong>
+        <br>Земля
+        <br>Коричневый
+        <br>Спокойствие
+      </td>
+      <td class="s"><strong>Юг</strong>
+        <br>Огонь
+        <br>Оранжевый
+        <br>Слава
+      </td>
+      <td class="se"><strong>Юго-Восток</strong>
+        <br>Дерево
+        <br>Зеленый
+        <br>Роман
+      </td>
+    </tr>
+
+  </table>
+
 
   <script src="script.js"></script>
 </body>
