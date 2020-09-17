@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="wrapper">
+
+  <p>...содержимое до скрипта...</p>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => alert("Дерево DOM готово после скрипта с 'defer'!")); // (2)
+  </script>
+
+  <script defer src="https://javascript.info/article/script-async-defer/long.js?speed=1"></script>
+
+  <p>...содержимое после скрипта...</p>
+
+  <script async src="https://javascript.info/article/script-async-defer/long.js"></script>
+  <script async src="https://javascript.info/article/script-async-defer/small.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>
