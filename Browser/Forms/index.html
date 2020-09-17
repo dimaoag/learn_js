@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+      .invalid { border-color: red; }
+      #error { color: red }
+      .error {
+        background: red;
+      }
+      li { cursor: pointer; }
+      :focus { outline: 1px dashed green; }
+    </style>
+</head>
+<body class="wrapper">
+
+  <form name="my">
+    <input name="one" value="1">
+    <input name="two" value="2">
+
+    <input type="radio" name="age" value="10">
+    <input type="radio" name="age" value="20">
+  <!----------------------------------------------->
+    <select id="select">
+      <option value="apple">Яблоко</option>
+      <option value="pear">Груша</option>
+      <option value="banana">Банан</option>
+    </select>
+
+    <br>
+    <!----------------------------------------------->
+
+
+    Ваш email: <input type="email" id="input">
+
+    <div id="error"></div>
+    <!----------------------------------------------->
+
+    <ul id="tab_list">
+      <li tabindex="1">Один</li>
+      <li tabindex="0">Ноль</li>
+      <li tabindex="2">Два</li>
+      <li tabindex="-1">Минус один</li>
+      <li>Три</li>
+    </ul>
+
+    <!----------------------------------------------->
+
+    <input type="text" onchange="alert(this.value)">
+
+    <select onchange="alert(this.value)">
+      <option value="">Выберите что-нибудь</option>
+      <option value="1">Вариант 1</option>
+      <option value="2">Вариант 2</option>
+      <option value="3">Вариант 3</option>
+    </select>
+
+    <!----------------------------------------------->
+    <br>
+    <input type="text" id="input2"> oninput: <span id="result"></span>
+
+    <!----------------------------------------------->
+
+
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>
