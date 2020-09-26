@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development",
+    "dev:watch": "webpack --mode development --watch",
     "build": "webpack --mode production"
   },
   "author": "Dmytro Orikhovskyi",
@@ -13,5 +14,8 @@
     "html-webpack-plugin": "^4.5.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "jquery": "^3.5.1"
   }
 }
