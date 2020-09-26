@@ -1,3 +1,5 @@
+@import "header.css";
+
 .hide {
   display: none !important;
 }
@@ -58,4 +60,8 @@ textarea {
 
 .multi-line {
   white-space: pre-line;
+}
+
+.my_class {
+  color: #996633;
 }
