@@ -1,1 +1,9 @@
-console.log('Hello World!')
+import {config} from './modules/config'
+import AppService from "./modules/app.service";
+import './modules/header.component'
+
+console.log(config.key)
+
+const service = new AppService('Hello world')
+service.log()
+
