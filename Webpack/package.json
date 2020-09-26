@@ -10,6 +10,7 @@
   "author": "Dmytro Orikhovskyi",
   "license": "ISC",
   "devDependencies": {
+    "html-webpack-plugin": "^4.5.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   }
