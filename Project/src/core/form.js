@@ -17,15 +17,23 @@ export class Form {
     return data
   }
 
+  clear(){
+    Object.keys(this.controls).forEach(control => {
+      this.form[control].value = ''
+    })
+  }
+
   isValid() {
     this.clearErrors()
     let isValid = true
 
     Object.keys(this.controls).forEach(control => {
-      this.controls[control].forEach(rule => {
-        if (! Validators[rule](this.form[control].value)) {
-          isValid = false
-          setError(this.form[control])
+      this.controls[control].forEach((rule) => {
+        for (let key in rule) {
+          if (! Validators[key](this.form[control].value)) {
+            isValid = false
+            setError(this.form[control], rule[key])
+          }
         }
       })
     })
@@ -48,8 +56,8 @@ export class Form {
   }
 }
 
-function setError(field){
+function setError(field, error){
   field.classList.add('invalid')
-  const error = '<p class="validation-error"> Input correctly data! </p>'
-  field.insertAdjacentHTML('afterend', error)
+  const errorElem = `<p class="validation-error"> ${error} </p>`
+  field.insertAdjacentHTML('afterend', errorElem)
 }
