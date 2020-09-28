@@ -4,4 +4,8 @@ export class Validators {
     return value && value.trim()
   }
 
+  static min5(value = '') {
+    return value.trim() && value.length >= 5
+  }
+
 }

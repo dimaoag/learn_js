@@ -7,7 +7,7 @@ export class CreateComponent extends Component {
     super(id)
 
     this.form = new Form(this.$el, {
-      title: ['required'],
+      title: ['required', 'min5'],
       text: ['required'],
       type: ['required']
     })
@@ -21,8 +21,10 @@ export class CreateComponent extends Component {
 
 function submitHandler(event) {
   event.preventDefault()
+  const form = this.form
 
-  if (this.form.isValid()) {
+  if (form.isValid()) {
+    form.getData()
     console.log('ok')
   }
 }
