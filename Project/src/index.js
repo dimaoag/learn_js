@@ -2,5 +2,7 @@ import './css/styles.css'
 import './scss/index.scss'
 
 import {HeaderComponent} from './components/header.component'
+import {NavigationComponent} from './components/navigation.component'
 
-const header = new HeaderComponent('header')
+new HeaderComponent('header')
+new NavigationComponent('navigation')
