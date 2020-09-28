@@ -1,4 +1,6 @@
 import './css/styles.css'
 import './scss/index.scss'
 
-console.log('Hello world')
+import {HeaderComponent} from './components/header.component'
+
+const header = new HeaderComponent('header')
