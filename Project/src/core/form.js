@@ -1,4 +1,5 @@
 import {Validators} from './validators'
+const dateFormat = require('dateformat')
 
 export class Form {
   constructor(form, controls) {
@@ -13,6 +14,7 @@ export class Form {
     Object.keys(this.controls).forEach(control => {
       data[control] = this.form[control].value
     })
+    data['date'] = dateFormat(new Date(), "yyyy-mm-dd' 'HH:MM:ss")
 
     return data
   }

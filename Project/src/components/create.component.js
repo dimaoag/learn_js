@@ -1,5 +1,6 @@
 import {Component} from '../core/component'
 import {Form} from '../core/form'
+import {apiService} from '../services/api.service'
 
 
 export class CreateComponent extends Component {
@@ -26,13 +27,13 @@ export class CreateComponent extends Component {
 }
 
 
-function submitHandler(event) {
+async function submitHandler(event) {
   event.preventDefault()
   const form = this.form
 
   if (form.isValid()) {
+    await apiService.createPost(form.getData())
     form.clear()
-    form.getData()
-
+    alert('Сохранено успешно.')
   }
 }
