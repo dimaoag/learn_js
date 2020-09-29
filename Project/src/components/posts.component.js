@@ -34,9 +34,9 @@ function renderPost(post){
     ? `<li class="tag tag-blue tag-rounded">Новость</li>`
     : `<li class="tag tag-rounded">Заметка</li>`
 
-  const button = (JSON.parse(localStorage.getItem('favorites')) || []).includes(post.id)
-    ? `<button class="button-round button-small button-danger" data-id="${post.id}">Удалить с избранных</button>`
-    : `<button class="button-round button-small button-primary" data-id="${post.id}">Добавить в избранные</button>`
+  const button = (JSON.parse(localStorage.getItem('favorites')) || []).filter(item => item.id === post.id).length
+    ? `<button class="button-round button-small button-danger" data-id="${post.id}" data-title="${post.title}">Удалить с избранных</button>`
+    : `<button class="button-round button-small button-primary" data-id="${post.id}" data-title="${post.title}">Добавить в избранные</button>`
 
   return `
     <div class="panel">
@@ -57,23 +57,25 @@ function renderPost(post){
   `
 }
 
-function buttonHandler(event){
+async function buttonHandler(event){
   const $el = event.target
   const id = $el.dataset.id
+  const title = $el.dataset.title
 
   if (id) {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || []
+    const exist = favorites.filter(item => item.id === id)
 
-    if (favorites.includes(id)){
+    if (exist.length){
       // delete post from localStorage
       $el.textContent = 'Добавить в избранные'
       $el.classList.replace('button-danger','button-primary')
-      favorites = favorites.filter(fId => fId !== id)
+      favorites = favorites.filter(item => item.id !== id)
     } else {
       // add post from localStorage
       $el.classList.replace('button-primary', 'button-danger')
       $el.textContent = 'Удалить с избранных'
-      favorites.push(id)
+      favorites.push({id, title})
     }
 
     localStorage.setItem('favorites', JSON.stringify(favorites))
