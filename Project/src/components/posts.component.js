@@ -1,18 +1,23 @@
 import {Component} from '../core/component'
 import {apiService} from '../services/api.service'
 import {TransformService} from '../services/transform.service'
+import {LoaderComponent} from './loader.component'
 const dateFormat = require('dateformat')
 
 export class PostsComponent extends Component {
   constructor(id) {
     super(id)
+
+    this.loader = new LoaderComponent('loader')
   }
 
   init() {}
 
   async onShow() {
+    this.loader.show()
     const posts = TransformService.transformPosts(await apiService.getPosts())
     const html = posts.map(post => renderPost(post))
+    this.loader.hide()
     this.$el.insertAdjacentHTML('afterbegin', html.join(' '))
   }
 
